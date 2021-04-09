@@ -8,6 +8,10 @@
 	</head>
 	<body>
 		<?php
+			require "menu.php";
+		?>
+	
+		<?php
 			require "footer.php";
 		?>
 	</body>
