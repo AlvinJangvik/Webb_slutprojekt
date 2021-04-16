@@ -2,3 +2,21 @@ body
 {
 	background: #00ffaa;
 }
+
+nav a:first-child
+{
+	margin-right: 90vw;
+}
+
+article
+{
+	text-align: center;
+}
+
+footer
+{
+	background-color:#aaaaaa;
+	margin: 20px;
+	padding: 10px;
+	text-align: center;
+}

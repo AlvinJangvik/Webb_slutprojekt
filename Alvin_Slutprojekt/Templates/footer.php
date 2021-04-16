@@ -1,3 +1,3 @@
 <footer>
-	Yeehaw
+	<p>Kontakt: support@support.com</p>
 </footer>
