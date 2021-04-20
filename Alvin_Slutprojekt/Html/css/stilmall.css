@@ -3,6 +3,12 @@ body
 	background: #00ffaa;
 }
 
+nav a
+{
+	color: black;
+	text-decoration: none;
+}
+
 nav a:first-child
 {
 	margin-right: 90vw;
@@ -17,6 +23,26 @@ footer
 {
 	background-color:#aaaaaa;
 	margin: 20px;
+	margin-top: 30vw;
 	padding: 10px;
 	text-align: center;
+}
+
+form
+{
+	text-align: center;
+}
+
+form a
+{
+	background-color: lavenderblush;
+	border-style: solid;
+	border-color: gray;
+	border-width:thin;
+	color: black;
+	padding: 1px 2px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
 }
