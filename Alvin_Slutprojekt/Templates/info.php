@@ -1,0 +1,13 @@
+<table>
+	<tr>
+		<th>Info</th>
+	</tr>
+	<br>
+	<tr>
+		<th>Användarnamn:</th>
+	</tr>
+	<br>
+	<tr>
+		<th>Email:</th>
+	</tr>
+</table>
