@@ -12,10 +12,10 @@
 		?>
 	
 		<form action="login2.php" method="post">
-			<p><label for="user">Användarnamn:</label>
-			<input type="text" id="user" name="username"></p>
-			<p><label for="pwd">Lössenord:</label>
-			<input type="password" id="pwd" name="password"></p>
+			<p><label for="Username">Användarnamn:</label>
+			<input type="text" id="Username" name="Username"></p>
+			<p><label for="Password">Lössenord:</label>
+			<input type="password" id="Password" name="Password"></p>
 			<p>
 				<a href="createUser.php">
 					Skapa användare
