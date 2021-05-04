@@ -1,48 +1,50 @@
 <?php
 	$str="";
 	
-	if(isset($_GET['name'])){
-		$usr = $_GET['name'];
+		
+	if(isset($_GET['Username'])){
+		$usr = $_GET['Username'];
 		$str = "Användarnamnet $usr är upptaget";
 	}
-	if(isset($_GET['mail'])){
-		$ma = $_GET['mail'];
+	if(isset($_GET['Email'])){
+		$ma = $_GET['Email'];
 		$str = "Mail $ma är upptagen";
 	}
 	
-	if(isset($_POST['username']) && isset($_POST['Email']) && isset($_POST['Password'])){
+	if(isset($_POST['Username']) && isset($_POST['Email']) && isset($_POST['Password']))
+	{
 		$username = filter_input(INPUT_POST, 'Username', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-		$mail = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_LOW);
+		$email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_LOW);
 		$password = filter_input(INPUT_POST, 'Password', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-
+		
 		require "../Include/connect.php";
-	
+		
 		// Kontrollera om användaren redan finns
 		$sql = "SELECT * FROM users WHERE Username = ? OR Email = ?";
 		$res = $dbh -> prepare($sql);
-		$res -> bind_param("ss",$Username, $Email);
+		$res -> bind_param("ss",$username, $email);
 		$res -> execute();
 		$result = $res->get_result();
 		$row=$result->fetch_assoc();
-	
 		if($row !== NULL){
-			if($row['Username']=== $Username){
-				echo "Användaren finns redan";
+			if($row['Username']=== $username){
+				$str = $str." Användaren finns redan";
 			}
 		
-			if($row['Email']=== $Email){
-				echo "Emailen finns redan";
+			if($row['Email']=== $email){
+				$str = $str." Emailen finns redan";
 			}
 		}
 	
+		// Lägg till användaren
 		else{
 			$status = 1;
 		
 			$sql = "INSERT INTO users(Username, Email, Password, Status) VALUE (?,?,?,?)";
 			$res = $dbh -> prepare($sql);
-			$res -> bind_param("sssi", $Username, $Email, $Password, $Status);
+			$res -> bind_param("sssi", $username, $email, $password, $status);
 			$res -> execute();
-		
+			
 			$str = "Användare Tillagd";
 		}
 	}

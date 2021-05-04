@@ -1,25 +1,18 @@
 <?php
-	/*$username = $_POST['username'];
-	$password = $_POST['password'];
-	
-	echo $username;
-	echo "<br>";
-	echo $password;*/
-	
-	if(empty($_POST['username'])||empty($_POST['password']))
+	if(empty($_POST['Username'])||empty($_POST['Password']))
 	{
 		// ej ifyllda fält
 		header("Location:login.php");
 	}
 	
-	require "../include/connect.php";
+	require "../Include/connect.php";
 	
-	$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
-	$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+	$Username = filter_input(INPUT_POST, 'Username',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+	$Password = filter_input(INPUT_POST, 'Password',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
 	
-	$sql = "SELECT password, status FROM users WHERE user=?";
+	$sql = "SELECT password, status FROM users WHERE Username=?";
 	$res = $dbh->prepare($sql);
-	$res->bind_param("s",$username);
+	$res->bind_param("s",$Username);
 	$res->execute();
 	
 	$result=$res->get_result();
@@ -27,8 +20,8 @@
 	
 	if(!$row)
 	{
-		//echo "Avändaren finns inte"
-		header("Location:login.php?status=3");
+		echo "Avändaren finns inte";
+		// header("Location:login.php?status=3");
 		
 	}
 	else
@@ -37,7 +30,7 @@
 		{
 			// echo "Användaren är inloggad"
 			session_start();
-			$_SESSION['username']=$username;
+			$_SESSION['Username']=$username;
 			$_SESSION['status']=$row['status'];
 			header("Location:login.php");
 		}
