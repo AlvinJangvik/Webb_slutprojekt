@@ -13,7 +13,7 @@
 	
 	if($_SESSION['status'] == 1)
 	{
-		$str = "test";
+		$str = "Välkommen ".$username."!";
 	}
 	
 	else
@@ -52,8 +52,6 @@ FORM;
 		?>
 	
 		<?php
-			require "footer.php";
-			
 			if(isset($_GET['status'])){
 				if($_GET['status']==3){
 					$str="Felaktig användare";
@@ -62,6 +60,8 @@ FORM;
 					$str="Felaktigt lösenord";
 				}
 			}
+			
+			require "footer.php";
 		?>
 	</body>
 </html>
