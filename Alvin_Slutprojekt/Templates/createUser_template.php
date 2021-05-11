@@ -15,7 +15,7 @@
 	{
 		$username = filter_input(INPUT_POST, 'Username', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
 		$email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_LOW);
-		$password = filter_input(INPUT_POST, 'Password', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+		$Password = filter_input(INPUT_POST, 'Password', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
 		
 		require "../Include/connect.php";
 		
@@ -38,11 +38,12 @@
 	
 		// Lägg till användaren
 		else{
+			$Password = password_hash($Password, PASSWORD_DEFAULT);
 			$status = 1;
 		
 			$sql = "INSERT INTO users(Username, Email, Password, Status) VALUE (?,?,?,?)";
 			$res = $dbh -> prepare($sql);
-			$res -> bind_param("sssi", $username, $email, $password, $status);
+			$res -> bind_param("sssi", $username, $email, $Password, $status);
 			$res -> execute();
 			
 			$str = "Användare Tillagd";

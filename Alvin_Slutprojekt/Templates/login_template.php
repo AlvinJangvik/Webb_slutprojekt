@@ -1,24 +1,27 @@
 <?php
-
-	require "../Include/connect.php";
-
-	$sql = "SELECT * FROM users WHERE username=? AND Status=?";
-	$res = $dbh->prepare($sql);
-	$res->bind_param("si",$username, $status);
-	$res->execute();
-	$result=$res->get_result();
-
-	$row = $result->fetch_assoc();
 	$str = "";
 	
-	if($_SESSION['status'] == 1)
+	if(isset($_GET['status'])){
+		if($_GET['status']==3){
+			$str="Felaktig användare";
+		}
+		elseif($_GET['status']==4){
+			$str="Felaktigt lösenord";
+		}
+	}
+	
+	if(isset($_SESSION['Status']))
 	{
-		$str = "Välkommen ".$username."!";
+		$str ="<div><p>Välkommen ".$_SESSION['Username']."!</p>";
+		$str .="
+		<a href=\"Logout.php\">
+			Logga ut
+		</a></div>";
 	}
 	
 	else
 	{
-		$str = <<<FORM
+		$str .= <<<FORM
 		<form action="login2.php" method="post">
 			<p><label for="Username">Användarnamn:</label>
 			<input type="text" id="Username" name="Username"></p>
@@ -52,14 +55,6 @@ FORM;
 		?>
 	
 		<?php
-			if(isset($_GET['status'])){
-				if($_GET['status']==3){
-					$str="Felaktig användare";
-				}
-				elseif($_GET['status']==4){
-					$str="Felaktigt lösenord";
-				}
-			}
 			
 			require "footer.php";
 		?>

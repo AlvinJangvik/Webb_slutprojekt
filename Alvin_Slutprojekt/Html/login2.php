@@ -10,7 +10,7 @@
 	$Username = filter_input(INPUT_POST, 'Username',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
 	$Password = filter_input(INPUT_POST, 'Password',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
 	
-	$sql = "SELECT password, status FROM users WHERE Username=?";
+	$sql = "SELECT Password, Status FROM users WHERE Username=?";
 	$res = $dbh->prepare($sql);
 	$res->bind_param("s",$Username);
 	$res->execute();
@@ -26,12 +26,12 @@
 	}
 	else
 	{
-		if($row['password']==$password)
+		if(password_verify($Password,$row['Password']))
 		{
 			// echo "Användaren är inloggad"
 			session_start();
-			$_SESSION['Username']=$username;
-			$_SESSION['status']=$row['status'];
+			$_SESSION['Username']=$Username;
+			$_SESSION['Status']=$row['Status'];
 			header("Location:login.php");
 		}
 		else

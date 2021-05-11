@@ -33,7 +33,12 @@ form
 	text-align: center;
 }
 
-form a
+div
+{
+	text-align: center;
+}
+
+a
 {
 	background-color: lavenderblush;
 	border-style: solid;
