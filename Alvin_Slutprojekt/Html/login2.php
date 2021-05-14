@@ -7,12 +7,13 @@
 	
 	require "../Include/connect.php";
 	
+	// Filtrerar input av säkerhets skäl
 	$Username = filter_input(INPUT_POST, 'Username',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
 	$Password = filter_input(INPUT_POST, 'Password',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
 	
-	$sql = "SELECT Password, Status FROM users WHERE Username=?";
+	$sql = "SELECT Password, Email, Status FROM users WHERE Username=?";
 	$res = $dbh->prepare($sql);
-	$res->bind_param("s",$Username);
+	$res->bind_param("s",$Username); // Lägger in variabeln i sql frågan där "?" är
 	$res->execute();
 	
 	$result=$res->get_result();
@@ -31,6 +32,7 @@
 			// echo "Användaren är inloggad"
 			session_start();
 			$_SESSION['Username']=$Username;
+			$_SESSION['Email']=$row['Email'];
 			$_SESSION['Status']=$row['Status'];
 			header("Location:login.php");
 		}

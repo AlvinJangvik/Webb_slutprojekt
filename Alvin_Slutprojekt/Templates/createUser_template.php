@@ -1,18 +1,10 @@
 <?php
 	$str="";
 	
-		
-	if(isset($_GET['Username'])){
-		$usr = $_GET['Username'];
-		$str = "Användarnamnet $usr är upptaget";
-	}
-	if(isset($_GET['Email'])){
-		$ma = $_GET['Email'];
-		$str = "Mail $ma är upptagen";
-	}
-	
+	// Ifall formen har skickats med värden
 	if(isset($_POST['Username']) && isset($_POST['Email']) && isset($_POST['Password']))
 	{
+		// Renar inputen så att användare inte kan skicka sql kod
 		$username = filter_input(INPUT_POST, 'Username', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
 		$email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_LOW);
 		$Password = filter_input(INPUT_POST, 'Password', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
@@ -50,6 +42,7 @@
 		}
 	}
 	
+	// Formuläret
 	else{
 		echo $str;
 		$str .=<<<FORM

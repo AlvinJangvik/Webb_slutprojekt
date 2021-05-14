@@ -10,12 +10,13 @@
 		<?php
 			require "menu.php";
 		?>
-	
-		<form action="post.php" method="post">
-			<p><label for="title">Titel</label>
-			<input type="text" id="title" name="title"></p>
-			<p><label for="text">Brödtext:</label>
-			<textarea rows="5" cols="50" id="text" name="text"></textarea></p>
+		
+		<!--Formulär-->
+		<form action="post2.php" method="post">
+			<p><label for="Title">Titel</label>
+			<input type="text" id="Title" name="Title"></p>
+			<p><label for="Text">Brödtext:</label>
+			<textarea rows="5" cols="50" id="Text" name="Text"></textarea></p>
 			<p><input type="submit" value="Lägg upp"></p>
 		</form>
 		

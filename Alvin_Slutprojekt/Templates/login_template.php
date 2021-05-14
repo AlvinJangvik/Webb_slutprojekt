@@ -10,15 +10,25 @@
 		}
 	}
 	
+	// Ifall man är inloggad
 	if(isset($_SESSION['Status']))
 	{
-		$str ="<div><p>Välkommen ".$_SESSION['Username']."!</p>";
-		$str .="
-		<a href=\"Logout.php\">
-			Logga ut
-		</a></div>";
+		$str ="<div><p>Välkommen!</p>
+		<p>Användarnamn: {$_SESSION['Username']}</p>
+		<p>Email: {$_SESSION['Email']}</p>";
+		
+		// ADMIN
+		if($_SESSION['Status'] == 2)
+		{
+			$str .= "<p>ADMIN KONTO</p>";
+		}
+		
+		$str .= "<a href=\"update.php\">Uppdater uppgifter</a>
+		<a href=\"Logout.php\">Logga ut</a>
+		</div>";
 	}
 	
+	// Login form
 	else
 	{
 		$str .= <<<FORM
