@@ -8,10 +8,65 @@
 		elseif($_GET['status']==4){
 			$str="Felaktigt lösenord";
 		}
+		
+		// Logga ut
+		elseif($_GET['status']==5){
+			session_start();
+			session_destroy();
+			header('Location: login.php');
+			exit;
+		}
+	}
+	
+	// Logga in
+	if(isset($_POST['Username']) && isset($_POST['Password']))
+	{
+			if(empty($_POST['Username'])||empty($_POST['Password']))
+		{
+			// ej ifyllda fält
+			header("Location:login.php");
+		}
+	
+		require "../Include/connect.php";
+	
+		// Filtrerar input av säkerhets skäl
+		$Username = filter_input(INPUT_POST, 'Username',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+		$Password = filter_input(INPUT_POST, 'Password',FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+	
+		$sql = "SELECT Password, Email, Status FROM users WHERE Username=?";
+		$res = $dbh->prepare($sql);
+		$res->bind_param("s",$Username); // Lägger in variabeln i sql frågan där "?" är
+		$res->execute();
+	
+		$result=$res->get_result();
+		$row=$result->fetch_assoc();
+	
+		if(!$row)
+		{
+			header("Location:login.php?status=3");
+		
+		}
+		else
+		{
+			if(password_verify($Password,$row['Password']))
+			{
+				// echo "Användaren är inloggad"
+				session_start();
+				$_SESSION['Username']=$Username;
+				$_SESSION['Email']=$row['Email'];
+				$_SESSION['Status']=$row['Status'];
+				header("Location:login.php");
+			}
+			else
+			{
+				//echo Felaktigt lösenord
+				header("Location:login.php?status=4");
+			}
+		}
 	}
 	
 	// Ifall man är inloggad
-	if(isset($_SESSION['Status']))
+	else if(isset($_SESSION['Status']))
 	{
 		$str ="<div><p>Välkommen!</p>
 		<p>Användarnamn: {$_SESSION['Username']}</p>
@@ -23,8 +78,8 @@
 			$str .= "<p>ADMIN KONTO</p>";
 		}
 		
-		$str .= "<a href=\"update.php\">Uppdater uppgifter</a>
-		<a href=\"Logout.php\">Logga ut</a>
+		$str .= "<a href=\"update.php\">Uppdatera uppgifter</a>
+		<a href='login.php?status=5'>Logga ut</a>
 		</div>";
 	}
 	
@@ -32,7 +87,7 @@
 	else
 	{
 		$str .= <<<FORM
-		<form action="login2.php" method="post">
+		<form action="login.php" method="post">
 			<p><label for="Username">Användarnamn:</label>
 			<input type="text" id="Username" name="Username"></p>
 			<p><label for="Password">Lössenord:</label>
